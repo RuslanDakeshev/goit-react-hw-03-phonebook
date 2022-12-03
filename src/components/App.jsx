@@ -33,6 +33,21 @@ export class App extends Component {
   //     : { contacts: [newContact, ...contacts] }
   // );
 
+  componentDidMount() {
+    const savedContacts = localStorage.getItem('contacts');
+
+    if (savedContacts) {
+      this.setState({ contacts: JSON.parse(savedContacts) });
+    }
+  }
+
+  componentDidUpdate(prewProps, prewState) {
+    const { contacts } = this.state;
+    if (prewState.contacts !== contacts) {
+      localStorage.setItem('contacts', JSON.stringify(contacts))
+    }
+  }
+
   handlerSubmit = data => {
     // const newContact = {
     //   ...data,
